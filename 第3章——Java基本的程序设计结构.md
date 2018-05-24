@@ -244,3 +244,37 @@ String s = greeting.substring(0, 3)
 - 如果虚拟机始终将相同的字符串共享，就可以使用==运算符检测是否相等。当时机上只有字符串常量是共享的，而+或substring等操作产生的结果并不是共享的
 
 ### 代码点，代码单元
+- java字符串由char序列组成。
+- 字符数据类型是一个采用`UTF-16`编码表示`Unicode`代码点的代码单元
+- 大多数的常用`Unicode`字符使用一个代码单元就可以表示，而辅助字符需要一堆代码单元表示
+- length方法返回采用`UTF-16`编码表示的给定字符串所需要的代码单元数量。
+```java
+String greeting = "Hello";
+int n = greeting.length(); // 5
+
+// 想要得到实际的长度
+int cpCount = greeting.codePointCount( 0, greeting.length() );
+```
+- 调用s.charAt(n)将返回位置n的代码单元， n介于 0~s.length() - 1之间
+- 如果想要遍历一个字符串，并且依次查看每一个代码点
+```java
+int cp = sentence.codePointAt(i);
+if( Character.isSupplementaryCodePoint(cp) ){
+    i += 2
+} else{
+    i++
+};
+```
+- `codePointAt`方法能够辨别一个代码但愿是辅助字符的第一部分还是第二部分，并能够正确返回结果
+- 可以使用下列语句实现回退操作
+```java
+i--;
+int cp = sentence.codePointAt(i);
+if( Character.isSupplementaryCodePoint(cp) ) i--;
+```
+
+### 字符串API
+- char charAt( int index )： 返回给定位置的代码单元。除非对底层的代码单元感兴趣，否则不需要调用这个方法
+- int codePointAt( int index ) 5.0： 返回从个定位置开始或结束的代码点
+- int offsetByCodePoints( int startIndex, int cpCount ) 5.0 ： 返回从startIndex代码点开始，唯一cpCount后的代码点索引
+- int compareTo( String other )： 按照字典顺序，如果字符串位于other之前，返回一个负数；如果字符串位于other之后，返回一个正数，如果两个字符串相等，返回0
