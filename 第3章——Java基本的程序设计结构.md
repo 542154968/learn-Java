@@ -278,3 +278,117 @@ if( Character.isSupplementaryCodePoint(cp) ) i--;
 - int codePointAt( int index ) 5.0： 返回从个定位置开始或结束的代码点
 - int offsetByCodePoints( int startIndex, int cpCount ) 5.0 ： 返回从startIndex代码点开始，唯一cpCount后的代码点索引
 - int compareTo( String other )： 按照字典顺序，如果字符串位于other之前，返回一个负数；如果字符串位于other之后，返回一个正数，如果两个字符串相等，返回0
+- boolean endsWith(String suffix)： 按照字典顺序，如果字符串位于other之前，返回一个负数。如果字符串位于other之后，返回一个正数。如果两个字符串相等，返回0
+- boolean equals(Object other)： 如果字符串与ohter相等，返回true
+- boolean equalsIgnoreCase(String other)： 如果字符串与other相等，忽略大小写，返回true
+- int indexOf(String str)、 int indexOf(String str, int fromIndex) int indexOf(int cp) int indexOf(int cp, int fromIndex)： 返回与字符串str或代码点cp匹配的第一个子串的开始位置。这个位置从索引0或fromIndex开始计算，如果在原始串中不存在str 返回-1
+- int lastIndexOf( String str ) int lastIndexOf(String str, int fromIndex) int lastindexOf(int cp) int astindexOf(int cp, int fromIndex)： 返回与字符串str或代码点cp陪陪的最后一个子串的开始位置，这个位置从原始串尾端或fromIndex开始计算
+- int length() 返回字符串的长度
+- int codePointCount(int startIndex, int endIndex) 5.0： 返回startIndex和endIndex-1之间的代码点数量，没有配成对的带动字符将计入代码点
+- String replace(CharSequence oldString, CharSequence newString)： 返回一个新字符串。这个字符串用newString代替原始字符串中所有的oldString，可以用String或StringBuilder对象作为CharSequence参数
+- boolean startsWidth(String prefix): 如果字符串以preffix字符串开始返回true
+- String substring(int beginIndex) String substring(int beginIndex, int endIndex)；返回一个新字符串，这个字符串包含原始字符串中从beginIndex到串尾或endIndex-1所有代码单元
+- String toLowerCase() 返回一个新字符串，这个字符串将原始字符串中的大写字母改为小写字母
+- String toUpperCase() 返回一个新字符串，这个字符串能将原始字符串中的所有小写字母改为大写字母
+- String trim() 返回一个新字符串，去除首位空格
+
+### 构建字符串
+- 使用StringBuilder类可以避免例如按键或来自文件中的单次，采用字符串连接的方式达到此目的的效率比较低，每次链接字符串都会构建一个新的String对象，耗时耗空间
+- 如果需要用许多小段的字符串构建一个字符串
+```java
+// 构建一个空的字符串构建器
+StringBuilder builder = new StringBuilder();
+// 每次需要添加一部分内容时，就调用append方法
+builder.append(ch); // appends a single character
+builder.append(str); // appends a string
+// 在需要构建字符串时，就调用toString方法，将可以得到一个String对象，其中包含了构建起种的字符序列
+String completedString = builder.toString();
+```
+- 在JDK5.0中引入StringBuilder类。这个累的前身是StringBuffer，其效率略微有些低，但允许采用多线程的方式进行添加或删除字符的操作。
+- 如果所有字符串在一个单线程（通畅都是这样）中编辑，则应该使用StringBuilder代替它
+- StringBuilder() 构造一个空的字符串构建器
+- int length() 返回构建起或缓冲器种的代码单元数量
+- StringBuilder append(String str) 追加一个字符串并返回this
+- StringBuilder appendCodePoint(int cp) 追加一个代码点，并将其转换为一个或两个代码单元并返回this
+- void setCharAt(int i, char c) 将低i个代码单元设置为c
+- StringBuilder insert(int offset, String str) 在offset位置插入一个字符串并返回this
+- StringBuilder insert( int offset, Char c ) 在offset位置插入一个代码单元并返回this
+- StringBuilder delete(int startIndex, int endIndex) 删除偏移量从startIndex到 - endIndex-1的代码单元并返回this
+- String toString() 返回一个与构建器或缓冲器内容相同的字符串
+
+## 输入输出
+- GUI
+
+### 读取输入
+- 打印输出到"标准输出流"（即控制台窗口）是一件非常容易得事情，只要调用`System.out.println`。
+- 然而，读取"标准输入流"`System.in`就没有这么简单了。
+- 要想通过控制台进行输入，首先要构造一个`Scanner`对象，并与“标准输入流”`System.in`关联
+```java
+Scanner in = new Scanner(System.in)
+```
+- 现在就可以使用`Scanner`类的各种方法实现输入操作了
+```java
+System.out.print("what is your name?");
+String name = in.nextLine(); 
+// 因为再输入行中有坑包含空格，要想读取一个单词，以空白符' '作为分隔符，就调用
+String firstName = in.next();
+// 要想读取一个整数，就调用nextInt方法
+System.out.print("How old are you?")
+int age = in.nextInt();
+// 要想读取下一个浮点数， 就调用nextDouble方法
+// 最后，在程序的最开始添加上一行
+import java.util.*
+// 
+```
+- Scanner类定义在java.util包中。
+- 当使用的类不是定义在基本java.lang包中时，一定要使用import指示字符将相应的包加载进来
+```java
+import java.util.*;
+public class InputText{
+    public static void main(String[] args){
+        Scanner in = new Scanner(System.in);
+        System.out.print("what is your name?");
+        String name = in.nextLine();
+        System.out.print("How old are you?");
+        int age = in.nextInt();
+        System.out.println("Hello, " + name + ". Next year, you'll be " + (age + 1) );
+    }
+```
+- 因为输入是可见的，所以Scanner类不适用于从控制台读取密码。Java SE6特别引入了Console类实现这个目的。
+```java
+Console cons = System.console();
+String username = cons.readLine("User name: ");
+char[] passwd = cons.readPassword("Password: ");
+```
+- 为了安全起见，返回的密码存放在一堆字符串数组中，而不是字符串中，在对密码进行处理之后，应该马上用一个天重置覆盖数组元素。
+- 采用Console对象处理输入不如采用Scanner方便。每次之鞥呢读取一行输入，而没有能够读取一个单词或一个数值的方法。
+- **java.util.Scanner 5.0**
+- Scanner( InputStream in ) 用诶定的输入流创建一个Scanner对象
+- String nextLine() 读取出入的下一行内容
+- String next() 读取输入的下一个单词
+- int nextInt()、double nextDouble() 读取并转换下一个表示整数或浮点数的字符序列
+- boolean hasNext() 检测输入中是否还有其他单词
+- boolean hasNextInt()、 boolean hasNextDouble() 检测时候还有表示整数或浮点数的下一个字符序列
+- **java.lang.System 1.0**
+- static Console console() 6  若果有可能进行交互操作，就谈过控制台窗口为交互的用户返回一个Console对象。否则返回null。对于热呢一个通过控制台窗口启动的程序，都可使用Console对象。否则，其可用性将于所使用的系统有关
+- **java.io.Console 6**
+- static char[] readPassword(String prompt, Object...args)
+- static Strin readLine(String prompt, Object...args)
+- 显示字符串prompt并且读取用户输入，知道输入行结束。args参数可以用来提供输入格式
+
+### 格式化输出
+- 可以使用`System.out.print(x)`将数值x输出到控制台上。这条命令将以x对应的数据类型所允许的最大非0数字位数打印输出x
+```java
+double x = 10000.0 / 3.0;
+System.out.print(x); // 3333.33333333335
+```
+- Java SE5.0沿用了C语言库函数中的printf方法
+```java
+System.out.printf("%8.2f", x)
+// 可以用8个字符宽度和小数点后两个字符的精度打印x 也就是说，打印输出一个空格和7个字符
+// 3333.33
+```
+- 每一个以%字符开始的格式说明符都用相应的参数替换。格式说明符尾部的转换符将知识被格式化的数值类型：f表示浮点数，s表示字符串，d表示十进制整数
+- d 十进制整数  x 十六进制整数  o 八进制整数  r 定点浮点数  e 指数浮点数  g 通用浮点数  a 十六进制浮点数 
+- s 字符串  c 字符  b 布尔  h 散列码  tx 日期时间  % 百分号  n 与平台有关的行分隔符
+- 还可以给出控制格式化输出的各种标志
