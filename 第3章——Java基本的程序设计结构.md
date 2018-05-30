@@ -392,3 +392,70 @@ System.out.printf("%8.2f", x)
 - d 十进制整数  x 十六进制整数  o 八进制整数  r 定点浮点数  e 指数浮点数  g 通用浮点数  a 十六进制浮点数 
 - s 字符串  c 字符  b 布尔  h 散列码  tx 日期时间  % 百分号  n 与平台有关的行分隔符
 - 还可以给出控制格式化输出的各种标志
+- ……
+
+### 文件输入与输出
+- 要想对文件进行读取，就需要衣蛾用File对象构造一个Scanner对象
+```java
+Scanner in = new SXcanner( new File("myfile.txt") );
+```
+- 如果文件名中包含反斜杠，要加个`/`转义
+- 现在，就可以利用前面介绍的任何一个`Scanner`方法对文件进行读取
+- 要想写入文件，需要构造一个`PrintWriter`对象，在构造器中只需提供文件名
+```java
+PrintWriter out = new PrintWriter("mufile.txt")
+```
+- 如果文件不存在，则可以像输出到System.out一样使用print println 以及printf命令
+```java
+String dir = System.getProperty("user.dir") // 获取路径的位置
+```
+- 异常处理，在main方法中用throws子句标记
+```java
+public static void main( String[] args ) throws FileNotFoundException{
+    Scanner in = new Scanner(new File("myfile.txt"))
+}
+```
+- 当使用命令行启动一个程序时，可以利用重定向将任意文件捆绑到System.in和System.out
+```java
+java MyProg <myfile.txt> output.txt
+```
+- **java.util.Scanner 5.0**
+- Scanner(File f) 构造一个从给定文件读取数据的Scanner
+- Scanner(String data) 构造一个从给定字符串读取数据的Scanner
+- **java.io.PrintWriter 1.1**
+- PrintWriter(File f) 构造一个将数据写入给定文件的PrintWriter
+- PrintWriter(String fileName) 构造一个将数据写入文件的PrintWriter 文件名由参数决定
+- **java.io.File 1.0**
+- File(String fileName) 用给定文件名，构造一个描述文件的File对象 注意这个文件当前不必存在
+
+## 控制流程
+- java使用条件语句和循环结构确定控制流程
+
+### 块作用域
+- 块，即复合语句。时只有一对花括号括起来的若干条简单的Java语句。块确定了变量的作用域。一个快可以嵌套在另一个块中
+```java
+public static void main(String[] args){
+    int n;
+    {
+        int k;
+    } // 只有在此块中能找到k
+}
+```
+- 但是，不能在嵌套的两个块中声明同名的变量
+```java
+pualic static void main(String[] args){
+    int n;
+    {
+        int n; // 报错
+    }
+}
+```
+
+### 条件语句
+- 在java中，条件语句格式为  if(condition) statement
+- while(condition) statement
+- do statement while (condition)
+
+### 确定循环
+- for循环
+- for语句的3个部门应该对同一个计数器变量进行初始化、检测和更新。
