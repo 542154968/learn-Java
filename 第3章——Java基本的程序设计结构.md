@@ -459,3 +459,64 @@ pualic static void main(String[] args){
 ### 确定循环
 - for循环
 - for语句的3个部门应该对同一个计数器变量进行初始化、检测和更新。
+- for语句内部定义一个变量，这个变量就补鞥在循环体之外使用，如果希望再for循环体之外使用循环技术器的最终值，就要确保这个变量在循环语句的前面且外部声明
+
+### 多重选择 switch语句
+- 当用if/else比较笨拙的时候就用switch
+- 一定要写break
+- case必须是整数或枚举常量，不能测试字符串
+```java
+String input = " 1";
+
+switch( input ){ // err
+    case "A": // err 
+    ...
+    break;
+}
+```
+- 当在switch语句中使用枚举常量时，不必在每个标签中指定枚举名，可以有switch的表达式值确定
+
+### 中断控制流程语句
+- goto 保留字 一种语法种类 没有使用 不好的写法
+- break
+- 带标签的break，用于跳出多重嵌套的循环语句，标签必须放在希望跳出的最外层循环之前，并且必须紧跟一个冒号
+- 如果输入有误，通过执行带标签的break跳转到带标签的语句块末尾，对于任何使用break语句的代码都需要检测循环式正常结束还是由break跳出
+- continue 中断正常的控制流程 continue语句将控制转移到最内层循环的首部
+```java
+Scanner in = new Scanner(System.in);
+while( sum < goal ){
+ System.out.print("Enter a number: ");
+ n = in.nextInt();
+ if( n < 0 ) continue;
+ sum += n;
+}
+```
+
+## 大数值
+- 如果基本的横竖和浮点数京都不能够满足需求，那么可以实用`java.math`保重的连个很有用的类——BigInteger和BigDecimal。这俩个类可以处理任意长度数字序列的数值。
+- BigInteger类实现了任意京都的整数运算，BigDecimal实现了任意京都的浮点数运算
+- 使用静态的valueOf方法可以将普通数值转换为大数值
+```JAVA
+BigInterger a = BigInterger.valueOf(100);
+```
+- 不能使用运算符处理大数值，可以使用其add、multiply方法等
+- **API java.math.BigInteger 1.1**
+- BigInteger add(BigInteger other)
+- BigInteger substract(BigInteger other)
+- BigInteger multiply(BigInteger other)
+- BigInteger divide(BigInteger other)
+- BigInteger mod(BigInteger other)
+- 以上返回这个大整数和另一个大整数other的和 差 积 商 以及余数
+- int compareTo(BigInteger other)
+- 如果这个大整数与另一个大整数other相等， 返回0； 如果这个大整数小于领个大整数other，返回负数，否则返回整数
+- static BigInteger valueOf(long x) 返回值等于x的大整数
+- **java.mathBigInteger 1.1**
+- BigDecimal add(BigDecimal other)
+- BigDecimal subtract(BigDecimal other)
+- BigDecimal multiply(BigDecimal other)
+- BigDecimal divide(BigDecimal other, RoundingMode mode) 5.0 返回这个大实数与另一个大实数other的和差积商，必须给出舍入方式。RoundingMode.HALF_UP是在学校中学习的四舍五入方式，适用于常规的计算，其它舍入参考文档
+- int compareTo(BigDecimal other) 如果这个大实数与另一个大实数相等，返回0；如果这个大实数小于零一个大实数，返回负数；否则，返回整数
+- Static BigDecimal valueOf(long x)
+- Static BigDecimal valueOf(long x, int scale) 返回值为x 或x/10scale的一个大实数
+
+## 数组
