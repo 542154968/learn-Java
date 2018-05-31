@@ -520,3 +520,121 @@ BigInterger a = BigInterger.valueOf(100);
 - Static BigDecimal valueOf(long x, int scale) 返回值为x 或x/10scale的一个大实数
 
 ## 数组
+- 数组是一种数据结构，用来存储同一类型值的集合。
+- 通过一个整型下标可以访问数组中的每一个值。
+- 在声明数组变量时，需要指出数组类型（数据元素类型紧跟[]）和数组变量的名字
+```java
+// 生命了变量a，并没有将a初始化为一个真正的数组。应该使用new运算符创建数组
+int[] a;
+// 这条语句创建了一个可以存储100个整数的数组
+int[] a = new int[100];
+```
+- 可以使用`int[] a`或`int a[]`声明数组
+- 数组下标从0开始
+- 如果创建了一个100个元素的数组，并且视图访问元素`a[100]`，或是任何0~99之外的下标，程序会引发`array index out of bounds`
+- 获取数组中的元素个数，可以使用array.length
+```java
+for( int i = 0; i < a.length; i++ ){
+    System.out.println(a[i])
+}
+```
+- 一旦创建了数组，就不能在改变它的大小（尽管可以改版每一个数组元素）。如果经常需要在运行过程中扩展数组的带下。就应该使用另一种数据结构——数组列表（arry list）
+
+## For each 循环
+- Java SE 5.0 增加了一种贡呢个很强的循环结构，可以用来一次处理数组中的每个元素（其他类型的元素集合亦可）而不必为指定下标值而分心
+- for( uariable: collection ) statement
+- 定义一个变量用于暂存集合中的每个元素，并执行相应的语句（当然，也可以是语句块）。collection这一季和表达式必须是一个数组或是一个实现了Iterable接口的类对象， 例如：
+```java
+for( int element: a )
+    System.out.println(element)
+```
+- 这个循环应该读作"循环a中的米一个元素"。Java语言的设计者认为应该使用诸如foreach、in这样的关键字。
+- 有个更加简单的方式打印数组中的所有值，即利用Arrays类的toString方法。返回一个包含数组元素的字符串，这些元素被放置在括号内，并用逗号分隔
+
+### 数组初始化及匿名数组
+- JAVA提供了一种创建数组对象并同时赋予初始值的简写形式
+```java
+// 不需要使用 new
+int[] smallPrimes = {2, 3, 5, 7, 11, 3};
+```
+- 甚至还可以初始化一个匿名的数组
+```java
+new int[] {17, 16, 815, 8, 6 };
+```
+- 这汇总表示法将创建一个新数组并利用括号中提供的值进行初始化，数组的大小就是初始值的个数
+- 使用这种语法形式可以再不创建新变量的情况下重新初始化一个数组
+```java
+smallPrimes = new int[] {17, 19, 16, 321, 35};
+// 简写
+int[] anonymous = {17,1 6, 65};
+smallPrimes = anonymous;
+```
+- Java中允许数组长度为0，但是数组长度为0和null不同
+
+### 数组拷贝
+- 讲一个数组变量拷贝给另一个数组变量，两个变量将引用同一个数组
+```java
+int[] luckyNumbers = smallPrimes;
+luckyNumbers[5] = 12; // 这时， smallPrimes[5]也是12
+```
+- 如果希望讲一个数组的所有值拷贝到一个新的数组中去，就要使用Arrays类的copyOf方法
+```java
+int[] copieLuckyNumbers = Arrays.copyOf( luckyNumbers, luckyNumbers.length );
+// 第二个参数是新数组的长度，这个方法通常用来增加数组的大小
+luckyNumbers = Arrays.copyOf(luckyNumbers, 2 * luckyNumbers.length)
+```
+- 如果数组元素是数值型，那么多余的元素将诶赋值0；
+- 如果数组元素是布尔型，将赋值为false
+- 如果长度小于元是数组的长度，则只拷贝前面的元素
+- JavaSE6之前，用System类的arraycopy拷贝
+```java
+// 数组to必须有足够的控件存放数组
+System.arraycopy(from. fromIndex, to, toIndex, count)
+```
+```java
+int[] smallPrimes = {2, 3, 5, 7, 11, 13};
+int[] luckyNumbers = {1001, 1002, 1003, 1004, 1005, 1006, 1007};
+System.arraycopy(smallPrimes, 2, luckyNumbers, 3, 4);
+```
+
+### 命令行参数
+- 每一个Java应用程序都有一个带String arg[]参数的main方法。
+- 这个参数表名main方法将接受一个字符串数组，也就是命令行参数
+```java
+public class Message{
+    public static void main(String[] args){
+    
+    }
+}
+```
+
+### 数组排序
+- sort 用了优化了快速排序的算法
+```java
+int[] a = new int[10000];
+Arrays.sort(a)
+```
+
+**java.util.Arrays 1.2**
+- static String toString(type[] a)5.0 返回包含a中数据元素的字符串，这些数据元素被放在括号内，并用逗号分隔。
+- 1. a类型为 int long short char byte boolean float double的数组
+
+- static type copyOf( type[] a, int length ) 6
+- static type copyOf( type[] a, int start, int end ) 6 返回与a类型相同的一个数组，其长度为length或者end-start 数组元素为a的值
+- static void sort(type[] a)
+- static int binarySearch(type[] a, type v)
+- static int binarySearch(type[] a. int start, int end, type v) 二分法快速查找值v 成功 返回下标，否则返回一个负数r -r-1是为保持a有序v应插入的位置
+- static void fill( type[] a, type v ) 将数组的所有数据元素值设为v
+- statric boolean equals( type[] a, type[] b ) 如果链各个数组大小相同，并且下标相同的元素都对应相等，返回true
+
+**java.langSystem 1.1**
+- static void arraycopy(Object from, int fromIndex, Object to, int toIndex, int count)
+- 1. from 任意烈性的数组
+  2. fromIndex 原始数组中带靠背元素的起始下标
+  3. to 与from同类型水族
+  4. toIndex 目标数组防止拷贝元素的起始下标
+  5. count 拷贝的元素数量
+  
+  
+#暂停！！！ 我不要记笔记了 太慢了进度 待我后期慢慢品味的时候再回来做笔记
+
